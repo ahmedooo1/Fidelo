@@ -1,0 +1,39 @@
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply bg-passport text-paper font-body antialiased;
+}
+
+::selection {
+  @apply bg-brass/40 text-ink;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+.paper-texture {
+  background-image: radial-gradient(circle at 1px 1px, rgba(18, 35, 37, 0.06) 1px, transparent 0);
+  background-size: 14px 14px;
+}
+
+.perforation {
+  background-image: radial-gradient(circle, transparent 3px, #0F3D3E 3.5px);
+  background-size: 14px 14px;
+  background-position: center;
+}
+
+.focus-ring:focus-visible {
+  outline: 3px solid #C9A227;
+  outline-offset: 3px;
+}
