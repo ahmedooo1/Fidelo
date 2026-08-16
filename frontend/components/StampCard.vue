@@ -24,7 +24,7 @@ const slots = computed(() =>
     <div class="perforation absolute left-0 top-0 h-full w-3" />
 
     <div class="px-8 py-7 pl-10">
-      <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-ink/50">Carte de fidelite</p>
+      <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-ink/50">Carte de fidélité</p>
       <h3 v-if="programName" class="mt-1 font-display text-3xl italic text-passport">{{ programName }}</h3>
 
       <div class="mt-6 flex flex-wrap gap-3">
@@ -50,13 +50,13 @@ const slots = computed(() =>
           <path d="M12 2l2.6 5.6 6.1.6-4.6 4.1 1.3 6-5.4-3.2-5.4 3.2 1.3-6-4.6-4.1 6.1-.6z" fill="currentColor" />
         </svg>
         <p class="font-body text-sm font-medium text-passport">
-          {{ rewardsAvailable }} recompense{{ rewardsAvailable > 1 ? 's' : '' }} prete{{ rewardsAvailable > 1 ? 's' : '' }}
+          {{ rewardsAvailable }} récompense{{ rewardsAvailable > 1 ? 's' : '' }} prête{{ rewardsAvailable > 1 ? 's' : '' }}
           <span v-if="rewardDescription" class="block text-xs font-normal text-ink/60">{{ rewardDescription }}</span>
         </p>
       </div>
       <p v-else class="mt-5 font-body text-xs text-ink/50">
         Encore {{ stampsRequired - currentStamps }} tampon{{ stampsRequired - currentStamps > 1 ? 's' : '' }} avant
-        {{ rewardDescription ? `: ${rewardDescription}` : 'ta recompense' }}
+        {{ rewardDescription ? `: ${rewardDescription}` : 'ta récompense' }}
       </p>
     </div>
   </div>

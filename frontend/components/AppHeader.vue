@@ -34,7 +34,7 @@ function doLogout() {
             class="focus-ring rounded-full border border-paper/15 px-4 py-2 text-sm text-paper/60 transition hover:border-paper/30 hover:text-paper"
             @click="doLogout"
           >
-            Deconnexion
+            Déconnexion
           </button>
         </template>
         <template v-else>
@@ -68,7 +68,7 @@ function doLogout() {
             Nouveau programme
           </NuxtLink>
           <button type="button" class="focus-ring w-fit text-left text-sm text-paper/60" @click="doLogout">
-            Deconnexion
+            Déconnexion
           </button>
         </template>
         <template v-else>

@@ -55,7 +55,7 @@ async function goToLookup() {
     const member = await request<{ id: string }>(`/members/lookup/${lookupCode.value.trim()}`, { auth: true })
     router.push(`/members/${member.id}`)
   } catch (e) {
-    lookupError.value = 'Aucun client trouve avec ce code.'
+    lookupError.value = 'Aucun client trouvé avec ce code.'
   }
 }
 </script>
@@ -76,15 +76,15 @@ async function goToLookup() {
       </div>
       <div class="rounded-2xl border border-paper/10 bg-paper/5 p-4 text-center">
         <p class="font-display text-3xl italic text-paper">{{ stats.stamps }}</p>
-        <p class="mt-1 font-mono text-[10px] uppercase tracking-[0.14em] text-paper/50">Tampons donnes</p>
+        <p class="mt-1 font-mono text-[10px] uppercase tracking-[0.14em] text-paper/50">Tampons donnés</p>
       </div>
       <div class="rounded-2xl border border-brass/30 bg-brass/5 p-4 text-center">
         <p class="font-display text-3xl italic text-brass">{{ stats.rewardsAvailable }}</p>
-        <p class="mt-1 font-mono text-[10px] uppercase tracking-[0.14em] text-paper/50">Recompenses pretes</p>
+        <p class="mt-1 font-mono text-[10px] uppercase tracking-[0.14em] text-paper/50">Récompenses prêtes</p>
       </div>
       <div class="rounded-2xl border border-paper/10 bg-paper/5 p-4 text-center">
         <p class="font-display text-3xl italic text-paper">{{ stats.rewardsRedeemed }}</p>
-        <p class="mt-1 font-mono text-[10px] uppercase tracking-[0.14em] text-paper/50">Recompenses utilisees</p>
+        <p class="mt-1 font-mono text-[10px] uppercase tracking-[0.14em] text-paper/50">Récompenses utilisées</p>
       </div>
     </div>
 
@@ -108,8 +108,8 @@ async function goToLookup() {
     <div v-if="loading" class="text-paper/60">Chargement...</div>
 
     <div v-else-if="!programs.length" class="rounded-2xl border border-paper/10 bg-paper/5 p-12 text-center">
-      <p class="text-paper/60">Tu n'as pas encore de programme de fidelite.</p>
-      <NuxtLink to="/programs/new" class="mt-3 inline-block text-sm text-brass underline">Creer mon premier programme</NuxtLink>
+      <p class="text-paper/60">Tu n'as pas encore de programme de fidélité.</p>
+      <NuxtLink to="/programs/new" class="mt-3 inline-block text-sm text-brass underline">Créer mon premier programme</NuxtLink>
     </div>
 
     <div v-else class="grid gap-5 md:grid-cols-2">

@@ -31,38 +31,38 @@ const burstBits = computed(() =>
 
 const timeline = [
   {
-    tag: 'Etape 1',
-    title: 'Cree ton programme',
-    text: 'Choisis le nombre de tampons et la recompense : "1 cafe offert au 8e", "-20% au 10e passage"... Pret en 2 minutes.',
+    tag: 'Étape 1',
+    title: 'Crée ton programme',
+    text: 'Choisis le nombre de tampons et la récompense : "1 café offert au 8e", "-20% au 10e passage"... Prêt en 2 minutes.',
   },
   {
-    tag: 'Etape 2',
+    tag: 'Étape 2',
     title: 'Inscris tes clients',
-    text: 'Chaque client recoit un code unique et une carte digitale accessible par lien direct, sans application a installer.',
+    text: 'Chaque client reçoit un code unique et une carte digitale accessible par lien direct, sans application à installer.',
   },
   {
-    tag: 'Etape 3',
-    title: 'Tamponne a chaque visite',
-    text: 'Depuis ton espace, cherche le code du client et ajoute un tampon en un clic. La recompense se declenche automatiquement.',
+    tag: 'Étape 3',
+    title: 'Tamponne à chaque visite',
+    text: 'Depuis ton espace, cherche le code du client et ajoute un tampon en un clic. La récompense se déclenche automatiquement.',
   },
 ]
 
 const rewardTicker = [
-  '1 cafe offert au 8e',
-  '-20% des le 10e passage',
+  '1 café offert au 8e',
+  '-20% dès le 10e passage',
   'Coupe gratuite au 6e',
   '1 dessert offert',
-  'Seance offerte au 10e',
+  'Séance offerte au 10e',
   'Livre offert au 5e achat',
   '-15% sur la prochaine visite',
   'Massage offert au 8e',
 ]
 
 const businessTypes = [
-  { label: 'Cafe', icon: 'cup' },
+  { label: 'Café', icon: 'cup' },
   { label: 'Coiffeur', icon: 'scissors' },
   { label: 'Restaurant', icon: 'plate' },
-  { label: 'Institut beaute', icon: 'sparkle' },
+  { label: 'Institut beauté', icon: 'sparkle' },
   { label: 'Salle de sport', icon: 'dumbbell' },
   { label: 'Librairie', icon: 'book' },
 ]
@@ -87,17 +87,17 @@ const businessTypes = [
             </span>
           </div>
           <h1 class="font-display text-5xl italic leading-[1.05] text-paper md:text-6xl">
-            La carte de fidelite <span class="text-brass underline decoration-wavy decoration-2 underline-offset-8 decoration-brass/50">de votre commerce</span>, en digital
+            La carte de fidélité <span class="text-brass underline decoration-wavy decoration-2 underline-offset-8 decoration-brass/50">de votre commerce</span>, en digital
           </h1>
           <p class="mt-6 font-body text-lg leading-relaxed text-paper/70">
-            Fini les petites cartes en papier qu'on perd. Vos clients gardent leur carte sur leur telephone, vous tamponnez en un clic.
+            Fini les petites cartes en papier qu'on perd. Vos clients gardent leur carte sur leur téléphone, vous tamponnez en un clic.
           </p>
           <div class="mt-8 flex flex-col items-center gap-4 sm:flex-row md:items-start">
             <NuxtLink
               to="/register"
               class="shimmer-btn rounded-full px-7 py-3.5 font-body text-base font-bold text-ink shadow-xl transition hover:scale-105"
             >
-              Creer mon programme
+              Créer mon programme
             </NuxtLink>
             <a href="#essayer" class="font-body text-sm font-medium text-paper/70 underline-offset-4 hover:text-paper hover:underline">
               Essayer la carte &rarr;
@@ -116,7 +116,7 @@ const businessTypes = [
             style="--float-r: -10deg"
           >
             <div class="flex h-16 w-16 animate-float items-center justify-center rounded-full border-2 border-dashed border-brass/50 text-center leading-tight">
-              Etabli<br />2026
+              Établi<br />2026
             </div>
           </div>
           <div
@@ -130,18 +130,18 @@ const businessTypes = [
 
           <div v-tilt class="tilt-glow rounded-3xl">
             <StampCard
-              program-name="Cafe des Artisans"
+              program-name="Café des Artisans"
               :stamps-required="stampsRequired"
               :current-stamps="currentStamps"
               :rewards-available="currentStamps === 0 ? 1 : 0"
-              reward-description="1 cafe offert"
+              reward-description="1 café offert"
             />
           </div>
         </div>
       </div>
 
       <a href="#comment-ca-marche" class="mx-auto mt-16 flex w-fit animate-bob items-center gap-2 font-mono text-[10px] uppercase tracking-[0.2em] text-paper/40 hover:text-paper/70">
-        Decouvrir
+        Découvrir
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
     </section>
@@ -164,7 +164,7 @@ const businessTypes = [
 
     <!-- COMMENT CA MARCHE : timeline -->
     <section id="comment-ca-marche" class="mx-auto max-w-4xl px-6 py-24">
-      <h2 class="mb-16 text-center font-display text-3xl italic text-paper md:text-4xl" v-reveal>Comment ca marche</h2>
+      <h2 class="mb-16 text-center font-display text-3xl italic text-paper md:text-4xl" v-reveal>Comment ça marche</h2>
 
       <div class="relative">
         <div class="visa-line absolute left-1/2 top-0 hidden h-full -translate-x-1/2 md:block" aria-hidden="true" />
@@ -199,7 +199,7 @@ const businessTypes = [
         <span class="font-mono text-xs uppercase tracking-[0.2em] text-brass" v-reveal>A vous de jouer</span>
         <h2 class="mt-3 font-display text-3xl italic text-paper md:text-4xl" v-reveal="60">Cliquez pour tamponner la carte</h2>
         <p class="mt-4 max-w-md font-body text-sm text-paper/60" v-reveal="120">
-          C'est exactement ce que vivent vos clients depuis leur telephone, et vous depuis votre espace commercant.
+          C'est exactement ce que vivent vos clients depuis leur téléphone, et vous depuis votre espace commerçant.
         </p>
 
         <div class="relative mt-10 w-full max-w-sm" v-reveal="180">
@@ -217,15 +217,15 @@ const businessTypes = [
           <button
             type="button"
             class="block w-full cursor-pointer rounded-3xl text-left transition active:scale-[0.97]"
-            aria-label="Tamponner la carte de demonstration"
+            aria-label="Tamponner la carte de démonstration"
             @click="simulateStamp"
           >
             <StampCard
-              program-name="Cafe des Artisans"
+              program-name="Café des Artisans"
               :stamps-required="stampsRequired"
               :current-stamps="currentStamps"
               :rewards-available="currentStamps === 0 ? 1 : 0"
-              reward-description="1 cafe offert"
+              reward-description="1 café offert"
               class="shadow-2xl transition hover:shadow-brass/20"
             />
           </button>
@@ -236,16 +236,16 @@ const businessTypes = [
           class="mt-6 font-mono text-[11px] uppercase tracking-[0.16em] text-paper/40 underline-offset-4 hover:text-paper/70 hover:underline"
           @click="simulateStamp"
         >
-          {{ currentStamps === stampsRequired ? 'Encaisser la recompense' : 'Ajouter un tampon' }} &rarr;
+          {{ currentStamps === stampsRequired ? 'Encaisser la récompense' : 'Ajouter un tampon' }} &rarr;
         </button>
       </div>
     </section>
 
     <!-- POUR QUI -->
     <section class="mx-auto max-w-5xl px-6 py-24">
-      <h2 class="mb-4 text-center font-display text-3xl italic text-paper md:text-4xl" v-reveal>Pense pour tous les commerces de proximite</h2>
+      <h2 class="mb-4 text-center font-display text-3xl italic text-paper md:text-4xl" v-reveal>Pensé pour tous les commerces de proximité</h2>
       <p class="mx-auto mb-14 max-w-lg text-center font-body text-sm text-paper/60" v-reveal="60">
-        Partout ou la fidelite se construit visite apres visite.
+        Partout où la fidélité se construit visite après visite.
       </p>
 
       <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-6">

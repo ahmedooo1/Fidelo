@@ -5,14 +5,14 @@ export default defineNuxtConfig({
   css: ['~/assets/css/main.css'],
   app: {
     head: {
-      title: 'Fidelo - La carte de fidelite de votre commerce, en digital',
+      title: 'Fidelo - La carte de fidélité de votre commerce, en digital',
       meta: [
         { charset: 'utf-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
         {
           name: 'description',
           content:
-            'Fidelo transforme la carte de fidelite papier en carte digitale : tampons, recompenses et suivi client sans rien imprimer.',
+            'Fidelo transforme la carte de fidélité papier en carte digitale : tampons, récompenses et suivi client sans rien imprimer.',
         },
       ],
     },

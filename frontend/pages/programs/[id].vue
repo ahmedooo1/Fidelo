@@ -55,15 +55,15 @@ async function addMember() {
     if (contact && EMAIL_RE.test(contact)) {
       try {
         await request(`/members/${created.id}/send-card`, { method: 'POST', auth: true })
-        successMsg.value = `Client ajoute, carte envoyee par email a ${contact}.`
+        successMsg.value = `Client ajouté, carte envoyée par email à ${contact}.`
       } catch (e) {
-        successMsg.value = 'Client ajoute, mais l\'envoi de la carte par email a echoue.'
+        successMsg.value = 'Client ajouté, mais l\'envoi de la carte par email a échoué.'
       }
     } else {
-      successMsg.value = 'Client ajoute.'
+      successMsg.value = 'Client ajouté.'
     }
   } catch (e) {
-    errorMsg.value = "L'ajout a echoue."
+    errorMsg.value = "L'ajout a échoué."
   } finally {
     adding.value = false
   }
@@ -83,7 +83,7 @@ async function addMember() {
         <p class="mb-3 text-sm font-medium text-paper/80">Inscrire un client</p>
         <div class="grid gap-3 sm:grid-cols-3">
           <input v-model="newName" type="text" placeholder="Nom (optionnel)" class="focus-ring rounded-xl border border-paper/15 bg-paper/5 px-4 py-2.5 text-paper sm:col-span-1" />
-          <input v-model="newContact" type="text" placeholder="Telephone / email (optionnel)" class="focus-ring rounded-xl border border-paper/15 bg-paper/5 px-4 py-2.5 text-paper sm:col-span-1" />
+          <input v-model="newContact" type="text" placeholder="Téléphone / email (optionnel)" class="focus-ring rounded-xl border border-paper/15 bg-paper/5 px-4 py-2.5 text-paper sm:col-span-1" />
           <button :disabled="adding" class="focus-ring rounded-xl bg-brass px-4 py-2.5 text-sm font-bold text-ink sm:col-span-1" @click="addMember">
             {{ adding ? 'Ajout...' : 'Ajouter' }}
           </button>
@@ -109,7 +109,7 @@ async function addMember() {
           </div>
           <div class="text-right">
             <p class="text-sm text-paper/70">{{ m.currentStamps }} / {{ program.stampsRequired }}</p>
-            <p v-if="m.rewardsAvailable" class="text-xs font-medium text-brass">Recompense prete</p>
+            <p v-if="m.rewardsAvailable" class="text-xs font-medium text-brass">Récompense prête</p>
           </div>
         </NuxtLink>
       </div>

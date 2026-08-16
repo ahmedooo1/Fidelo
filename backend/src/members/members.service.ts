@@ -89,7 +89,7 @@ export class MembersService {
   async redeem(id: string, ownerId: string) {
     const member = await this.findOwned(id, ownerId);
     if (member.rewardsAvailable <= 0) {
-      throw new ForbiddenException('Aucune recompense disponible pour ce client');
+      throw new ForbiddenException('Aucune récompense disponible pour ce client');
     }
     member.rewardsAvailable -= 1;
     member.rewardsRedeemed += 1;
@@ -106,7 +106,7 @@ export class MembersService {
     delete (member.owner as any).passwordHash;
     if (!member.contact || !EMAIL_RE.test(member.contact)) {
       throw new BadRequestException(
-        "Ce client n'a pas d'adresse email valide enregistree.",
+        "Ce client n'a pas d'adresse email valide enregistrée.",
       );
     }
 

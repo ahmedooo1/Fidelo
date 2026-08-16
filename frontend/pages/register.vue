@@ -29,7 +29,7 @@ async function submit() {
 
 <template>
   <main class="mx-auto flex min-h-[70vh] max-w-md flex-col justify-center px-6 py-16">
-    <h1 class="font-display text-3xl italic text-paper">Cree ton compte</h1>
+    <h1 class="font-display text-3xl italic text-paper">Crée ton compte</h1>
     <p class="mt-2 text-sm text-paper/60">Gratuit, en moins d'une minute.</p>
     <form class="mt-8 space-y-4" @submit.prevent="submit">
       <div>
@@ -46,11 +46,11 @@ async function submit() {
       </div>
       <p v-if="errorMsg" class="text-sm text-stamp">{{ errorMsg }}</p>
       <button type="submit" :disabled="loading" class="focus-ring w-full rounded-full bg-brass px-6 py-3.5 font-bold text-ink disabled:opacity-60">
-        {{ loading ? 'Creation...' : 'Creer mon compte' }}
+        {{ loading ? 'Création...' : 'Créer mon compte' }}
       </button>
     </form>
     <p class="mt-6 text-center text-sm text-paper/60">
-      Deja inscrit ? <NuxtLink to="/login" class="text-brass underline">Connecte-toi</NuxtLink>
+      Déjà inscrit ? <NuxtLink to="/login" class="text-brass underline">Connecte-toi</NuxtLink>
     </p>
   </main>
 </template>

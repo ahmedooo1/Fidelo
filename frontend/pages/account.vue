@@ -35,9 +35,9 @@ async function saveProfile() {
       body: { businessName: businessName.value },
     })
     auth.setSession(auth.token!, user)
-    profileMsg.value = 'Nom du commerce mis a jour.'
+    profileMsg.value = 'Nom du commerce mis à jour.'
   } catch (e) {
-    profileError.value = "La mise a jour a echoue."
+    profileError.value = "La mise à jour a échoué."
   } finally {
     profileSaving.value = false
   }
@@ -57,7 +57,7 @@ async function savePassword() {
       auth: true,
       body: { currentPassword: currentPassword.value, newPassword: newPassword.value },
     })
-    passwordMsg.value = 'Mot de passe modifie.'
+    passwordMsg.value = 'Mot de passe modifié.'
     currentPassword.value = ''
     newPassword.value = ''
     confirmPassword.value = ''

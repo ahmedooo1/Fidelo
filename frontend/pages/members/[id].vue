@@ -61,7 +61,7 @@ async function redeem() {
   try {
     member.value = await request<Member>(`/members/${member.value.id}/redeem`, { method: 'POST', auth: true })
   } catch (e) {
-    errorMsg.value = 'Aucune recompense disponible.'
+    errorMsg.value = 'Aucune récompense disponible.'
   } finally {
     busy.value = false
   }
@@ -78,9 +78,9 @@ async function sendByEmail() {
   sendError.value = ''
   try {
     await request(`/members/${member.value.id}/send-card`, { method: 'POST', auth: true })
-    sendMsg.value = `Carte envoyee a ${member.value.contact}.`
+    sendMsg.value = `Carte envoyée à ${member.value.contact}.`
   } catch (e: any) {
-    sendError.value = e?.data?.message || "L'envoi a echoue."
+    sendError.value = e?.data?.message || "L'envoi a échoué."
   } finally {
     sending.value = false
   }
@@ -116,13 +116,13 @@ async function sendByEmail() {
           class="focus-ring rounded-full border border-brass/50 px-6 py-3 text-sm font-bold text-brass disabled:opacity-60"
           @click="redeem"
         >
-          Utiliser la recompense
+          Utiliser la récompense
         </button>
       </div>
       <p v-if="errorMsg" class="mt-3 text-sm text-stamp">{{ errorMsg }}</p>
 
       <div class="mt-8 rounded-2xl border border-paper/10 bg-paper/5 p-5">
-        <p class="text-sm text-paper/70">Lien de la carte a envoyer au client :</p>
+        <p class="text-sm text-paper/70">Lien de la carte à envoyer au client :</p>
         <div class="mt-2 flex items-center gap-2">
           <code class="min-w-0 flex-1 truncate rounded-lg bg-paper/10 px-3 py-2 font-mono text-xs text-paper/80">{{ cardUrl }}</code>
           <button class="focus-ring rounded-lg bg-paper/10 px-3 py-2 text-xs text-paper/80" @click="copyLink">Copier</button>
@@ -135,7 +135,7 @@ async function sendByEmail() {
             class="focus-ring rounded-lg bg-brass px-4 py-2.5 text-xs font-bold text-ink disabled:opacity-60"
             @click="sendByEmail"
           >
-            {{ sending ? 'Envoi...' : `Envoyer par email a ${member.contact}` }}
+            {{ sending ? 'Envoi...' : `Envoyer par email à ${member.contact}` }}
           </button>
           <p v-else class="text-xs text-paper/40">
             Ajoute une adresse email valide en contact du client pour pouvoir lui envoyer sa carte par mail.
