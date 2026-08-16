@@ -90,12 +90,12 @@ async function goToLookup() {
 
     <div class="mb-12 rounded-2xl border border-paper/10 bg-paper/5 p-6">
       <p class="mb-3 font-body text-sm font-medium text-paper/80">Tamponner un client</p>
-      <div class="flex gap-2">
+      <div class="flex flex-col gap-2 sm:flex-row">
         <input
           v-model="lookupCode"
           type="text"
           placeholder="Code client (ex: 7K2P9QX)"
-          class="focus-ring flex-1 rounded-xl border border-paper/15 bg-paper/5 px-4 py-2.5 font-mono text-sm uppercase text-paper placeholder:text-paper/30"
+          class="focus-ring min-w-0 flex-1 rounded-xl border border-paper/15 bg-paper/5 px-4 py-2.5 font-mono text-sm uppercase text-paper placeholder:text-paper/30"
           @keyup.enter="goToLookup"
         />
         <button class="focus-ring rounded-xl bg-brass px-5 py-2.5 text-sm font-bold text-ink" @click="goToLookup">

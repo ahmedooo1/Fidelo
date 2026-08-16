@@ -124,7 +124,7 @@ async function sendByEmail() {
       <div class="mt-8 rounded-2xl border border-paper/10 bg-paper/5 p-5">
         <p class="text-sm text-paper/70">Lien de la carte a envoyer au client :</p>
         <div class="mt-2 flex items-center gap-2">
-          <code class="flex-1 truncate rounded-lg bg-paper/10 px-3 py-2 font-mono text-xs text-paper/80">{{ cardUrl }}</code>
+          <code class="min-w-0 flex-1 truncate rounded-lg bg-paper/10 px-3 py-2 font-mono text-xs text-paper/80">{{ cardUrl }}</code>
           <button class="focus-ring rounded-lg bg-paper/10 px-3 py-2 text-xs text-paper/80" @click="copyLink">Copier</button>
         </div>
 

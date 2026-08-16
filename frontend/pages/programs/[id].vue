@@ -23,6 +23,8 @@ const newName = ref('')
 const newContact = ref('')
 const adding = ref(false)
 const errorMsg = ref('')
+const successMsg = ref('')
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 async function load() {
   loading.value = true
@@ -38,15 +40,28 @@ onMounted(load)
 async function addMember() {
   adding.value = true
   errorMsg.value = ''
+  successMsg.value = ''
   try {
-    await request('/members', {
+    const created = await request<Member & { contact: string }>('/members', {
       method: 'POST',
       auth: true,
       body: { programId: route.params.id, name: newName.value, contact: newContact.value },
     })
+    const contact = newContact.value
     newName.value = ''
     newContact.value = ''
     await load()
+
+    if (contact && EMAIL_RE.test(contact)) {
+      try {
+        await request(`/members/${created.id}/send-card`, { method: 'POST', auth: true })
+        successMsg.value = `Client ajoute, carte envoyee par email a ${contact}.`
+      } catch (e) {
+        successMsg.value = 'Client ajoute, mais l\'envoi de la carte par email a echoue.'
+      }
+    } else {
+      successMsg.value = 'Client ajoute.'
+    }
   } catch (e) {
     errorMsg.value = "L'ajout a echoue."
   } finally {
@@ -74,6 +89,7 @@ async function addMember() {
           </button>
         </div>
         <p v-if="errorMsg" class="mt-2 text-xs text-stamp">{{ errorMsg }}</p>
+        <p v-if="successMsg" class="mt-2 text-xs text-brass">{{ successMsg }}</p>
       </div>
 
       <h2 class="mb-4 mt-10 font-display text-xl italic text-paper">Clients ({{ members.length }})</h2>
