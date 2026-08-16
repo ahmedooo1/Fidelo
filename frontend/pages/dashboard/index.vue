@@ -6,6 +6,12 @@ interface Program {
   rewardDescription: string
   active: boolean
 }
+interface Member {
+  currentStamps: number
+  totalStampsEver: number
+  rewardsAvailable: number
+  rewardsRedeemed: number
+}
 
 const { request } = useApi()
 const auth = useAuthStore()
@@ -16,6 +22,14 @@ const loading = ref(true)
 const lookupCode = ref('')
 const lookupError = ref('')
 
+const members = ref<Member[]>([])
+const stats = computed(() => ({
+  clients: members.value.length,
+  stamps: members.value.reduce((sum, m) => sum + m.totalStampsEver, 0),
+  rewardsAvailable: members.value.reduce((sum, m) => sum + m.rewardsAvailable, 0),
+  rewardsRedeemed: members.value.reduce((sum, m) => sum + m.rewardsRedeemed, 0),
+}))
+
 onMounted(async () => {
   auth.restore()
   if (!auth.user) {
@@ -23,7 +37,12 @@ onMounted(async () => {
     return
   }
   try {
-    programs.value = await request<Program[]>('/programs', { auth: true })
+    const [progs, mems] = await Promise.all([
+      request<Program[]>('/programs', { auth: true }),
+      request<Member[]>('/members/mine', { auth: true }),
+    ])
+    programs.value = progs
+    members.value = mems
   } finally {
     loading.value = false
   }
@@ -48,6 +67,25 @@ async function goToLookup() {
       <NuxtLink to="/programs/new" class="rounded-full bg-brass px-5 py-2.5 text-sm font-bold text-ink">
         + Nouveau programme
       </NuxtLink>
+    </div>
+
+    <div v-if="!loading && programs.length" class="mb-8 grid grid-cols-2 gap-4 sm:grid-cols-4">
+      <div class="rounded-2xl border border-paper/10 bg-paper/5 p-4 text-center">
+        <p class="font-display text-3xl italic text-paper">{{ stats.clients }}</p>
+        <p class="mt-1 font-mono text-[10px] uppercase tracking-[0.14em] text-paper/50">Clients</p>
+      </div>
+      <div class="rounded-2xl border border-paper/10 bg-paper/5 p-4 text-center">
+        <p class="font-display text-3xl italic text-paper">{{ stats.stamps }}</p>
+        <p class="mt-1 font-mono text-[10px] uppercase tracking-[0.14em] text-paper/50">Tampons donnes</p>
+      </div>
+      <div class="rounded-2xl border border-brass/30 bg-brass/5 p-4 text-center">
+        <p class="font-display text-3xl italic text-brass">{{ stats.rewardsAvailable }}</p>
+        <p class="mt-1 font-mono text-[10px] uppercase tracking-[0.14em] text-paper/50">Recompenses pretes</p>
+      </div>
+      <div class="rounded-2xl border border-paper/10 bg-paper/5 p-4 text-center">
+        <p class="font-display text-3xl italic text-paper">{{ stats.rewardsRedeemed }}</p>
+        <p class="mt-1 font-mono text-[10px] uppercase tracking-[0.14em] text-paper/50">Recompenses utilisees</p>
+      </div>
     </div>
 
     <div class="mb-12 rounded-2xl border border-paper/10 bg-paper/5 p-6">
