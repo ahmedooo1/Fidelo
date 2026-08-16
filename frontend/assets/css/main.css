@@ -37,3 +37,89 @@ body {
   outline: 3px solid #C9A227;
   outline-offset: 3px;
 }
+
+/* Scroll reveal (v-reveal directive) */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s cubic-bezier(.2,.7,.2,1), transform 0.7s cubic-bezier(.2,.7,.2,1);
+  will-change: opacity, transform;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Pointer tilt (v-tilt directive) */
+.tilt {
+  --rx: 0deg;
+  --ry: 0deg;
+  transform: perspective(900px) rotateX(var(--rx)) rotateY(var(--ry));
+  transition: transform 0.25s ease-out;
+  transform-style: preserve-3d;
+}
+.tilt-glow {
+  background: radial-gradient(320px circle at var(--mx, 50%) var(--my, 50%), rgba(201, 162, 39, 0.35), transparent 70%);
+}
+
+/* Infinite marquee track: duplicate content, animate -50% */
+.marquee-track {
+  display: flex;
+  width: max-content;
+  gap: 1rem;
+  animation: marquee 30s linear infinite;
+}
+.marquee-track.reverse {
+  animation-direction: reverse;
+  animation-duration: 34s;
+}
+.marquee-row:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+/* Subtle animated film-grain wash over dark sections */
+.grain {
+  position: relative;
+  isolation: isolate;
+}
+.grain::before {
+  content: '';
+  position: absolute;
+  inset: -20%;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.5;
+  background-image: radial-gradient(rgba(245, 239, 224, 0.06) 1px, transparent 1px);
+  background-size: 3px 3px;
+  animation: grain-shift 9s steps(6) infinite;
+}
+@keyframes grain-shift {
+  0% { transform: translate(0, 0); }
+  20% { transform: translate(-2%, 2%); }
+  40% { transform: translate(2%, -1%); }
+  60% { transform: translate(-1%, -2%); }
+  80% { transform: translate(1%, 2%); }
+  100% { transform: translate(0, 0); }
+}
+
+/* Dashed passport-page divider used down the timeline */
+.visa-line {
+  background-image: repeating-linear-gradient(to bottom, rgba(245, 239, 224, 0.25) 0 8px, transparent 8px 16px);
+  width: 2px;
+}
+
+/* Shimmer sweep across the primary CTA on hover */
+.shimmer-btn {
+  background-image: linear-gradient(110deg, #C9A227 40%, #f3dd8a 50%, #C9A227 60%);
+  background-size: 250% 100%;
+}
+.shimmer-btn:hover {
+  animation: shimmer 1.6s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+  .tilt { transform: none !important; }
+  .marquee-track { animation: none; }
+  .grain::before { animation: none; }
+}

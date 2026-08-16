@@ -6,10 +6,10 @@ services:
     restart: unless-stopped
     environment:
       POSTGRES_USER: fidelo
-      POSTGRES_PASSWORD: fidelo
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-fidelo}
       POSTGRES_DB: fidelo
     ports:
-      - '5433:5432'
+      - '127.0.0.1:${POSTGRES_HOST_PORT:-5433}:5432'
     volumes:
       - fidelo_pgdata:/var/lib/postgresql/data
     healthcheck:
@@ -24,12 +24,12 @@ services:
     environment:
       NODE_ENV: production
       PORT: 3021
-      DATABASE_URL: postgres://fidelo:fidelo@postgres:5432/fidelo
+      DATABASE_URL: postgres://fidelo:${POSTGRES_PASSWORD:-fidelo}@postgres:5432/fidelo
       JWT_SECRET: ${JWT_SECRET:-change-me-in-production}
       JWT_EXPIRES_IN: 7d
       FRONTEND_URL: ${FRONTEND_URL:-http://localhost:3020}
     ports:
-      - '3021:3021'
+      - '127.0.0.1:${BACKEND_HOST_PORT:-3021}:3021'
     depends_on:
       postgres:
         condition: service_healthy
@@ -40,7 +40,7 @@ services:
     environment:
       NUXT_PUBLIC_API_BASE: ${NUXT_PUBLIC_API_BASE:-http://localhost:3021/api}
     ports:
-      - '3020:3020'
+      - '127.0.0.1:${FRONTEND_HOST_PORT:-3020}:3020'
     depends_on:
       - backend
 
