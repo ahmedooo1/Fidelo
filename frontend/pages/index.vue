@@ -99,9 +99,6 @@ const businessTypes = [
             >
               Créer mon programme
             </NuxtLink>
-            <a href="#essayer" class="font-body text-sm font-medium text-paper/70 underline-offset-4 hover:text-paper hover:underline">
-              Essayer la carte &rarr;
-            </a>
           </div>
           <div class="mt-10 flex items-center justify-center gap-6 font-mono text-[11px] uppercase tracking-[0.14em] text-paper/40 md:justify-start">
             <span>Gratuit pour commencer</span>
@@ -119,16 +116,25 @@ const businessTypes = [
               Établi<br />2026
             </div>
           </div>
-          <div
-            class="pointer-events-none absolute -right-6 bottom-10 hidden select-none md:block"
-            style="--float-r: 8deg; animation-delay: -3s"
-          >
-            <div class="flex h-14 w-14 animate-float items-center justify-center rounded-full border-2 border-stamp/60 text-stamp">
-              <svg viewBox="0 0 24 24" width="22" height="22" fill="none"><path d="M12 2l2.6 5.6 6.1.6-4.6 4.1 1.3 6-5.4-3.2-5.4 3.2 1.3-6-4.6-4.1 6.1-.6z" fill="currentColor"/></svg>
-            </div>
-          </div>
 
-          <div v-tilt class="tilt-glow rounded-3xl">
+          <Transition name="burst-fade">
+            <div v-if="justRewarded" :key="burstKey" class="pointer-events-none absolute inset-0 z-20 flex items-center justify-center">
+              <span
+                v-for="(b, i) in burstBits"
+                :key="i"
+                class="absolute h-2 w-2 rounded-full bg-brass"
+                :style="{ '--tx': b.tx, '--ty': b.ty, animation: `burst 0.9s ease-out ${b.delay} forwards` }"
+              />
+            </div>
+          </Transition>
+
+          <button
+            type="button"
+            v-tilt
+            class="tilt-glow block w-full cursor-pointer rounded-3xl text-left transition active:scale-[0.97]"
+            aria-label="Tamponner la carte de démonstration"
+            @click="simulateStamp"
+          >
             <StampCard
               program-name="Café des Artisans"
               :stamps-required="stampsRequired"
@@ -136,7 +142,11 @@ const businessTypes = [
               :rewards-available="currentStamps === 0 ? 1 : 0"
               reward-description="1 café offert"
             />
-          </div>
+          </button>
+
+          <p class="mt-4 text-center font-mono text-[10px] uppercase tracking-[0.18em] text-paper/40">
+            {{ currentStamps === stampsRequired ? 'Clique pour encaisser la récompense' : 'Clique sur la carte pour tamponner' }}
+          </p>
         </div>
       </div>
 
@@ -190,54 +200,6 @@ const businessTypes = [
             <div class="hidden flex-1 md:block" />
           </div>
         </div>
-      </div>
-    </section>
-
-    <!-- DEMO INTERACTIVE -->
-    <section id="essayer" class="grain relative border-y border-paper/10 py-24">
-      <div class="relative z-10 mx-auto flex max-w-3xl flex-col items-center px-6 text-center">
-        <span class="font-mono text-xs uppercase tracking-[0.2em] text-brass" v-reveal>A vous de jouer</span>
-        <h2 class="mt-3 font-display text-3xl italic text-paper md:text-4xl" v-reveal="60">Cliquez pour tamponner la carte</h2>
-        <p class="mt-4 max-w-md font-body text-sm text-paper/60" v-reveal="120">
-          C'est exactement ce que vivent vos clients depuis leur téléphone, et vous depuis votre espace commerçant.
-        </p>
-
-        <div class="relative mt-10 w-full max-w-sm" v-reveal="180">
-          <Transition name="burst-fade">
-            <div v-if="justRewarded" :key="burstKey" class="pointer-events-none absolute inset-0 z-20 flex items-center justify-center">
-              <span
-                v-for="(b, i) in burstBits"
-                :key="i"
-                class="absolute h-2 w-2 rounded-full bg-brass"
-                :style="{ '--tx': b.tx, '--ty': b.ty, animation: `burst 0.9s ease-out ${b.delay} forwards` }"
-              />
-            </div>
-          </Transition>
-
-          <button
-            type="button"
-            class="block w-full cursor-pointer rounded-3xl text-left transition active:scale-[0.97]"
-            aria-label="Tamponner la carte de démonstration"
-            @click="simulateStamp"
-          >
-            <StampCard
-              program-name="Café des Artisans"
-              :stamps-required="stampsRequired"
-              :current-stamps="currentStamps"
-              :rewards-available="currentStamps === 0 ? 1 : 0"
-              reward-description="1 café offert"
-              class="shadow-2xl transition hover:shadow-brass/20"
-            />
-          </button>
-        </div>
-
-        <button
-          type="button"
-          class="mt-6 font-mono text-[11px] uppercase tracking-[0.16em] text-paper/40 underline-offset-4 hover:text-paper/70 hover:underline"
-          @click="simulateStamp"
-        >
-          {{ currentStamps === stampsRequired ? 'Encaisser la récompense' : 'Ajouter un tampon' }} &rarr;
-        </button>
       </div>
     </section>
 
