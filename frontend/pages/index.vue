@@ -87,7 +87,7 @@ const businessTypes = [
             </span>
           </div>
           <h1 class="font-display text-5xl italic leading-[1.05] text-paper md:text-6xl">
-            La carte de fidélité <span class="text-brass underline decoration-wavy decoration-2 underline-offset-8 decoration-brass/50">de votre commerce</span>, en digital
+            La carte de fidélité <span class="text-brass underline decoration-solid decoration-4 underline-offset-8 decoration-brass/60">de votre commerce</span>, en digital
           </h1>
           <p class="mt-6 font-body text-lg leading-relaxed text-paper/70">
             Fini les petites cartes en papier qu'on perd. Vos clients gardent leur carte sur leur téléphone, vous tamponnez en un clic.
