@@ -50,4 +50,10 @@ export class MembersController {
   redeem(@Req() req: any, @Param('id') id: string) {
     return this.membersService.redeem(id, req.user.id);
   }
+
+  @UseGuards(JwtAuthGuard)
+  @Post(':id/send-card')
+  sendCard(@Req() req: any, @Param('id') id: string) {
+    return this.membersService.sendCardByEmail(id, req.user.id);
+  }
 }

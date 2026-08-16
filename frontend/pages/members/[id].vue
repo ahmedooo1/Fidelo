@@ -19,6 +19,12 @@ const busy = ref(false)
 const errorMsg = ref('')
 const cardUrl = ref('')
 
+const sending = ref(false)
+const sendMsg = ref('')
+const sendError = ref('')
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+const hasEmailContact = computed(() => !!member.value?.contact && EMAIL_RE.test(member.value.contact))
+
 // L'API expose /members/lookup/:code et /members/mine mais pas /members/:id en lecture seule,
 // donc pour cette page de detail on recupere la liste et on filtre par id.
 async function loadById() {
@@ -64,6 +70,21 @@ async function redeem() {
 function copyLink() {
   navigator.clipboard?.writeText(cardUrl.value)
 }
+
+async function sendByEmail() {
+  if (!member.value) return
+  sending.value = true
+  sendMsg.value = ''
+  sendError.value = ''
+  try {
+    await request(`/members/${member.value.id}/send-card`, { method: 'POST', auth: true })
+    sendMsg.value = `Carte envoyee a ${member.value.contact}.`
+  } catch (e: any) {
+    sendError.value = e?.data?.message || "L'envoi a echoue."
+  } finally {
+    sending.value = false
+  }
+}
 </script>
 
 <template>
@@ -105,6 +126,22 @@ function copyLink() {
         <div class="mt-2 flex items-center gap-2">
           <code class="flex-1 truncate rounded-lg bg-paper/10 px-3 py-2 font-mono text-xs text-paper/80">{{ cardUrl }}</code>
           <button class="focus-ring rounded-lg bg-paper/10 px-3 py-2 text-xs text-paper/80" @click="copyLink">Copier</button>
+        </div>
+
+        <div class="mt-4 border-t border-paper/10 pt-4">
+          <button
+            v-if="hasEmailContact"
+            :disabled="sending"
+            class="focus-ring rounded-lg bg-brass px-4 py-2.5 text-xs font-bold text-ink disabled:opacity-60"
+            @click="sendByEmail"
+          >
+            {{ sending ? 'Envoi...' : `Envoyer par email a ${member.contact}` }}
+          </button>
+          <p v-else class="text-xs text-paper/40">
+            Ajoute une adresse email valide en contact du client pour pouvoir lui envoyer sa carte par mail.
+          </p>
+          <p v-if="sendMsg" class="mt-2 text-xs text-brass">{{ sendMsg }}</p>
+          <p v-if="sendError" class="mt-2 text-xs text-stamp">{{ sendError }}</p>
         </div>
       </div>
     </template>

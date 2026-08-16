@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   ForbiddenException,
   Injectable,
   NotFoundException,
@@ -9,14 +10,17 @@ import { customAlphabet } from 'nanoid';
 import { Member } from './member.entity';
 import { ProgramsService } from '../programs/programs.service';
 import { CreateMemberDto } from './dto/create-member.dto';
+import { MailService } from '../mail/mail.service';
 
 const generateCode = customAlphabet('ABCDEFGHJKMNPQRSTUVWXYZ23456789', 7);
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 @Injectable()
 export class MembersService {
   constructor(
     @InjectRepository(Member) private readonly membersRepo: Repository<Member>,
     private readonly programsService: ProgramsService,
+    private readonly mailService: MailService,
   ) {}
 
   async create(ownerId: string, dto: CreateMemberDto) {
@@ -86,5 +90,30 @@ export class MembersService {
     member.rewardsAvailable -= 1;
     member.rewardsRedeemed += 1;
     return this.membersRepo.save(member);
+  }
+
+  async sendCardByEmail(id: string, ownerId: string) {
+    const member = await this.membersRepo.findOne({
+      where: { id },
+      relations: ['owner', 'program'],
+    });
+    if (!member) throw new NotFoundException('Client introuvable');
+    if (member.owner.id !== ownerId) throw new ForbiddenException();
+    if (!member.contact || !EMAIL_RE.test(member.contact)) {
+      throw new BadRequestException(
+        "Ce client n'a pas d'adresse email valide enregistree.",
+      );
+    }
+
+    const cardUrl = `${process.env.FRONTEND_URL || 'http://localhost:3020'}/card/${member.code}`;
+    await this.mailService.sendLoyaltyCard({
+      to: member.contact,
+      memberName: member.name,
+      businessName: member.owner.businessName,
+      programName: member.program.name,
+      rewardDescription: member.program.rewardDescription,
+      cardUrl,
+    });
+    return { ok: true };
   }
 }

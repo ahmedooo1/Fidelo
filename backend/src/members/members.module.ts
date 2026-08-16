@@ -4,9 +4,10 @@ import { Member } from './member.entity';
 import { MembersService } from './members.service';
 import { MembersController } from './members.controller';
 import { ProgramsModule } from '../programs/programs.module';
+import { MailModule } from '../mail/mail.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Member]), ProgramsModule],
+  imports: [TypeOrmModule.forFeature([Member]), ProgramsModule, MailModule],
   controllers: [MembersController],
   providers: [MembersService],
   exports: [MembersService],
