@@ -62,12 +62,20 @@ body {
   background: radial-gradient(320px circle at var(--mx, 50%) var(--my, 50%), rgba(201, 162, 39, 0.35), transparent 70%);
 }
 
-/* Infinite marquee track: duplicate content, animate -50% */
+/* Infinite marquee track: duplicate content, animate -50%
+   (keyframes must live here, not just in tailwind.config: this class is
+   applied via a plain CSS rule rather than an `animate-*` utility class, so
+   Tailwind's content scanner never sees "marquee" as used and would purge
+   the keyframes from the build, leaving animation-name pointing at nothing) */
 .marquee-track {
   display: flex;
   width: max-content;
   gap: 1rem;
   animation: marquee 30s linear infinite;
+}
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
 }
 .marquee-track.reverse {
   animation-direction: reverse;
@@ -115,6 +123,10 @@ body {
 }
 .shimmer-btn:hover {
   animation: shimmer 1.6s linear infinite;
+}
+@keyframes shimmer {
+  0% { background-position: -150% 0; }
+  100% { background-position: 150% 0; }
 }
 
 @media (prefers-reduced-motion: reduce) {
