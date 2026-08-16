@@ -120,6 +120,9 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .reveal { opacity: 1; transform: none; transition: none; }
   .tilt { transform: none !important; }
-  .marquee-track { animation: none; }
   .grain::before { animation: none; }
+  /* The reward ticker stays in slow, steady linear motion even with reduced
+     motion: it's a simple horizontal scroll (no parallax/zoom/flash), and it
+     carries real content (example rewards) rather than being pure decoration. */
+  .marquee-track { animation-duration: 45s !important; }
 }

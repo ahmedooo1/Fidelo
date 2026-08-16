@@ -76,10 +76,16 @@ const businessTypes = [
 
       <div class="relative z-10 mx-auto flex max-w-6xl min-w-0 flex-col items-center gap-16 px-6 md:flex-row">
         <div class="min-w-0 max-w-xl text-center md:text-left" v-reveal>
-          <span class="mb-5 inline-flex items-center gap-2 rounded-full border border-paper/15 bg-paper/5 px-4 py-1.5 font-mono text-[11px] uppercase tracking-[0.16em] text-paper/60">
-            <span class="h-1.5 w-1.5 rounded-full bg-brass" />
-            Fidelite digitale &middot; sans papier, sans app
-          </span>
+          <div class="mb-6 inline-flex items-center gap-3">
+            <span class="flex h-14 w-14 shrink-0 -rotate-[8deg] items-center justify-center rounded-full border-2 border-dashed border-brass/70 font-mono text-[8px] font-bold uppercase leading-tight tracking-wide text-brass">
+              100%<br />Digital
+            </span>
+            <span class="h-8 w-px bg-paper/15" />
+            <span class="font-mono text-[11px] uppercase tracking-[0.16em] text-paper/50">
+              Sans papier<br class="md:hidden" />
+              <span class="hidden md:inline"> &middot; </span>Sans app
+            </span>
+          </div>
           <h1 class="font-display text-5xl italic leading-[1.05] text-paper md:text-6xl">
             La carte de fidelite <span class="text-brass underline decoration-wavy decoration-2 underline-offset-8 decoration-brass/50">de votre commerce</span>, en digital
           </h1>
