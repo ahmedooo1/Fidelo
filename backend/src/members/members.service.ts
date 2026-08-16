@@ -51,6 +51,9 @@ export class MembersService {
     });
     if (!member) throw new NotFoundException('Client introuvable pour ce code');
     if (member.owner.id !== ownerId) throw new ForbiddenException();
+    // The owner relation is only loaded for this check; strip passwordHash
+    // before the entity goes anywhere near a response.
+    delete (member.owner as any).passwordHash;
     return member;
   }
 
@@ -67,6 +70,7 @@ export class MembersService {
     });
     if (!member) throw new NotFoundException('Client introuvable');
     if (member.owner.id !== ownerId) throw new ForbiddenException();
+    delete (member.owner as any).passwordHash;
     return member;
   }
 
@@ -99,6 +103,7 @@ export class MembersService {
     });
     if (!member) throw new NotFoundException('Client introuvable');
     if (member.owner.id !== ownerId) throw new ForbiddenException();
+    delete (member.owner as any).passwordHash;
     if (!member.contact || !EMAIL_RE.test(member.contact)) {
       throw new BadRequestException(
         "Ce client n'a pas d'adresse email valide enregistree.",

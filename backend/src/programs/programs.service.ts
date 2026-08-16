@@ -33,6 +33,11 @@ export class ProgramsService {
     });
     if (!program) throw new NotFoundException('Programme introuvable');
     if (program.owner.id !== ownerId) throw new ForbiddenException();
+    // owner is only loaded for this ownership check; strip passwordHash so
+    // it never rides along in this (or any caller's) response -- callers
+    // like MembersService.create() embed this program directly into an
+    // entity that does get serialized back to the client.
+    delete (program.owner as any).passwordHash;
     return program;
   }
 }
