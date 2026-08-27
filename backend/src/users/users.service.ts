@@ -27,6 +27,13 @@ export class UsersService {
     return this.usersRepo.save(user);
   }
 
+  async setEmailVerified(id: string) {
+    const user = await this.usersRepo.findOne({ where: { id } });
+    if (!user) throw new NotFoundException('Utilisateur introuvable');
+    user.emailVerified = true;
+    return this.usersRepo.save(user);
+  }
+
   async updateProfile(id: string, businessName: string) {
     const user = await this.usersRepo.findOne({ where: { id } });
     if (!user) throw new NotFoundException('Utilisateur introuvable');

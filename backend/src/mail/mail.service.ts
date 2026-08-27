@@ -71,4 +71,40 @@ export class MailService {
       throw new ServiceUnavailableException("L'envoi de l'email a échoué.");
     }
   }
+
+  async sendVerificationEmail(params: { to: string; verifyUrl: string }) {
+    const transporter = this.getTransporter();
+    if (!transporter) return;
+
+    const html = `
+      <!doctype html>
+      <html lang="fr">
+      <head><meta charset="utf-8" /></head>
+      <body>
+      <div style="font-family: -apple-system, Helvetica, Arial, sans-serif; max-width: 480px; margin: 0 auto; padding: 32px 24px; color: #122325;">
+        <p style="font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: #C9A227; margin: 0 0 12px;">Fidelo</p>
+        <h1 style="font-size: 22px; margin: 0 0 16px;">Confirmez votre adresse email</h1>
+        <p style="font-size: 14px; line-height: 1.6; color: #444; margin: 0 0 24px;">
+          Bienvenue sur Fidelo ! Cliquez sur le bouton ci-dessous pour activer votre compte.
+        </p>
+        <a href="${params.verifyUrl}" style="display: inline-block; background: #C9A227; color: #122325; font-weight: bold; text-decoration: none; padding: 14px 28px; border-radius: 999px; font-size: 14px;">
+          Confirmer mon email
+        </a>
+        <p style="margin-top: 24px; font-size: 12px; color: #999; word-break: break-all;">${params.verifyUrl}</p>
+      </div>
+      </body>
+      </html>
+    `;
+
+    try {
+      await transporter.sendMail({
+        from: process.env.MAIL_FROM || process.env.SMTP_USER,
+        to: params.to,
+        subject: 'Confirmez votre adresse email - Fidelo',
+        html,
+      });
+    } catch (err) {
+      this.logger.error(`Failed to send verification email to ${params.to}`, err as Error);
+    }
+  }
 }

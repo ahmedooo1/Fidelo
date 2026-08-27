@@ -3,6 +3,11 @@
     <div class="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-6 py-10 text-sm text-paper/50 md:flex-row">
       <p class="font-display text-lg italic text-paper/80">fidelo<span class="text-brass">.</span></p>
       <p>La fidélité de vos clients, sans papier.</p>
+      <div class="flex gap-4">
+        <NuxtLink to="/legal/mentions-legales" class="hover:text-paper">Mentions légales</NuxtLink>
+        <NuxtLink to="/legal/cgu" class="hover:text-paper">CGU / CGV</NuxtLink>
+        <NuxtLink to="/legal/confidentialite" class="hover:text-paper">Confidentialité</NuxtLink>
+      </div>
       <p>&copy; {{ new Date().getFullYear() }} Fidelo</p>
     </div>
   </footer>

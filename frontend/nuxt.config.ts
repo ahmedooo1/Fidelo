@@ -14,6 +14,24 @@ export default defineNuxtConfig({
           content:
             'Fidelo transforme la carte de fidélité papier en carte digitale : tampons, récompenses et suivi client sans rien imprimer.',
         },
+        { name: 'theme-color', content: '#0A2B2C' },
+        { property: 'og:type', content: 'website' },
+        { property: 'og:site_name', content: 'Fidelo' },
+        { property: 'og:title', content: 'Fidelo - La carte de fidélité de votre commerce, en digital' },
+        {
+          property: 'og:description',
+          content:
+            'Fidelo transforme la carte de fidélité papier en carte digitale : tampons, récompenses et suivi client sans rien imprimer.',
+        },
+        { property: 'og:image', content: 'https://fidelo.aaweb.fr/og-image.png' },
+        { property: 'og:url', content: 'https://fidelo.aaweb.fr' },
+        { name: 'twitter:card', content: 'summary_large_image' },
+        { name: 'twitter:title', content: 'Fidelo - La carte de fidélité de votre commerce, en digital' },
+        { name: 'twitter:image', content: 'https://fidelo.aaweb.fr/og-image.png' },
+      ],
+      link: [
+        { rel: 'icon', type: 'image/png', href: '/icon.png' },
+        { rel: 'apple-touch-icon', href: '/icon.png' },
       ],
     },
   },

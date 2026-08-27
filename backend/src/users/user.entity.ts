@@ -21,6 +21,9 @@ export class User {
   @Column({ nullable: true })
   businessName: string;
 
+  @Column({ default: false })
+  emailVerified: boolean;
+
   @OneToMany(() => LoyaltyProgram, (p) => p.owner)
   programs: LoyaltyProgram[];
 
