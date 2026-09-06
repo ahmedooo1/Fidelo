@@ -17,6 +17,11 @@ export class AuthController {
     return this.authService.login(dto);
   }
 
+  @Post('google')
+  googleLogin(@Body('idToken') idToken: string) {
+    return this.authService.googleLogin(idToken);
+  }
+
   @Post('verify-email')
   verifyEmail(@Body('token') token: string) {
     return this.authService.verifyEmail(token);

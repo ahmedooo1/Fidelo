@@ -1,5 +1,7 @@
 <script setup lang="ts">
 const { request } = useApi()
+const auth = useAuthStore()
+const router = useRouter()
 
 const businessName = ref('')
 const email = ref('')
@@ -22,6 +24,15 @@ async function submit() {
   } finally {
     loading.value = false
   }
+}
+
+function onGoogleSuccess(session: { accessToken: string; user: any }) {
+  auth.setSession(session.accessToken, session.user)
+  router.push('/dashboard')
+}
+
+function onGoogleError(message: string) {
+  errorMsg.value = message
 }
 </script>
 
@@ -66,6 +77,14 @@ async function submit() {
           {{ loading ? 'Création...' : 'Créer mon compte' }}
         </button>
       </form>
+      <div class="my-6 flex items-center gap-3">
+        <div class="h-px flex-1 bg-paper/15"></div>
+        <span class="text-xs uppercase tracking-wide text-paper/40">ou</span>
+        <div class="h-px flex-1 bg-paper/15"></div>
+      </div>
+      <div class="flex justify-center">
+        <GoogleSignInButton @success="onGoogleSuccess" @error="onGoogleError" />
+      </div>
       <p class="mt-6 text-center text-sm text-paper/60">
         Déjà inscrit ? <NuxtLink to="/login" class="text-brass underline">Connecte-toi</NuxtLink>
       </p>

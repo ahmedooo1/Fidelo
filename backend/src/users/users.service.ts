@@ -22,8 +22,26 @@ export class UsersService {
     return this.usersRepo.findOne({ where: { id } });
   }
 
-  async create(data: { email: string; passwordHash: string; businessName?: string }) {
+  findByGoogleId(googleId: string) {
+    return this.usersRepo.findOne({ where: { googleId } });
+  }
+
+  async create(data: {
+    email: string;
+    passwordHash?: string;
+    businessName?: string;
+    googleId?: string;
+    emailVerified?: boolean;
+  }) {
     const user = this.usersRepo.create(data);
+    return this.usersRepo.save(user);
+  }
+
+  async linkGoogleId(id: string, googleId: string) {
+    const user = await this.usersRepo.findOne({ where: { id } });
+    if (!user) throw new NotFoundException('Utilisateur introuvable');
+    user.googleId = googleId;
+    if (!user.emailVerified) user.emailVerified = true;
     return this.usersRepo.save(user);
   }
 
@@ -44,6 +62,11 @@ export class UsersService {
   async changePassword(id: string, currentPassword: string, newPassword: string) {
     const user = await this.usersRepo.findOne({ where: { id } });
     if (!user) throw new NotFoundException('Utilisateur introuvable');
+    if (!user.passwordHash) {
+      throw new BadRequestException(
+        'Ce compte utilise la connexion Google, aucun mot de passe a definir ici',
+      );
+    }
     const valid = await bcrypt.compare(currentPassword, user.passwordHash);
     if (!valid) throw new BadRequestException('Mot de passe actuel incorrect');
     user.passwordHash = await bcrypt.hash(newPassword, 10);
