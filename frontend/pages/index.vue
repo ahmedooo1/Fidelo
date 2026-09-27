@@ -1,61 +1,17 @@
 <script setup lang="ts">
-const stampsRequired = 8
-const currentStamps = ref(5)
-const justRewarded = ref(false)
-const burstKey = ref(0)
-
-function simulateStamp() {
-  if (currentStamps.value < stampsRequired) {
-    currentStamps.value++
-    if (currentStamps.value === stampsRequired) {
-      justRewarded.value = true
-      burstKey.value++
-      setTimeout(() => (justRewarded.value = false), 1200)
-    }
-  } else {
-    currentStamps.value = 0
-  }
-}
-
-const burstBits = computed(() =>
-  Array.from({ length: 14 }, (_, i) => {
-    const angle = (360 / 14) * i + (i % 2 === 0 ? 6 : -6)
-    const dist = 70 + ((i * 37) % 40)
-    return {
-      tx: `${Math.cos((angle * Math.PI) / 180) * dist}px`,
-      ty: `${Math.sin((angle * Math.PI) / 180) * dist}px`,
-      delay: `${(i % 5) * 25}ms`,
-    }
-  }),
-)
-
 const timeline = [
   {
-    tag: 'Étape 1',
     title: 'Crée ton programme',
     text: 'Choisis le nombre de tampons et la récompense : "1 café offert au 8e", "-20% au 10e passage"... Prêt en 2 minutes.',
   },
   {
-    tag: 'Étape 2',
     title: 'Inscris tes clients',
     text: 'Chaque client reçoit un code unique et une carte digitale accessible par lien direct, sans application à installer.',
   },
   {
-    tag: 'Étape 3',
     title: 'Tamponne à chaque visite',
     text: 'Depuis ton espace, cherche le code du client et ajoute un tampon en un clic. La récompense se déclenche automatiquement.',
   },
-]
-
-const rewardTicker = [
-  '1 café offert au 8e',
-  '-20% dès le 10e passage',
-  'Coupe gratuite au 6e',
-  '1 dessert offert',
-  'Séance offerte au 10e',
-  'Livre offert au 5e achat',
-  '-15% sur la prochaine visite',
-  'Massage offert au 8e',
 ]
 
 const businessTypes = [
@@ -71,21 +27,11 @@ const businessTypes = [
 <template>
   <main class="overflow-x-clip">
     <!-- HERO -->
-    <section class="grain relative border-b border-paper/10 pb-28 pt-16 md:pt-24">
+    <section class="grain relative border-b border-paper/10 pb-20 pt-16 md:pb-24 md:pt-24">
       <div class="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(60%_50%_at_50%_0%,rgba(201,162,39,0.14),transparent)]" />
 
       <div class="relative z-10 mx-auto flex max-w-6xl min-w-0 flex-col items-center gap-16 px-6 md:flex-row">
         <div class="min-w-0 max-w-xl text-center md:text-left" v-reveal>
-          <div class="mb-6 inline-flex items-center gap-3">
-            <span class="flex h-14 w-14 shrink-0 -rotate-[8deg] items-center justify-center rounded-full border-2 border-dashed border-brass/70 font-mono text-[8px] font-bold uppercase leading-tight tracking-wide text-brass">
-              100%<br />Digital
-            </span>
-            <span class="h-8 w-px bg-paper/15" />
-            <span class="font-mono text-[11px] uppercase tracking-[0.16em] text-paper/50">
-              Sans papier<br class="md:hidden" />
-              <span class="hidden md:inline"> &middot; </span>Sans app
-            </span>
-          </div>
           <h1 class="font-display text-5xl italic leading-[1.05] text-paper md:text-6xl">
             La carte de fidélité <span class="text-brass underline decoration-solid decoration-4 underline-offset-8 decoration-brass/60">de votre commerce</span>, en digital
           </h1>
@@ -100,74 +46,11 @@ const businessTypes = [
               Créer mon programme
             </NuxtLink>
           </div>
-          <div class="mt-10 flex items-center justify-center gap-6 font-mono text-[11px] uppercase tracking-[0.14em] text-paper/40 md:justify-start">
-            <span>Gratuit pour commencer</span>
-            <span class="h-1 w-1 rounded-full bg-paper/30" />
-            <span>Sans carte bancaire</span>
-          </div>
+          <p class="mt-6 font-body text-sm text-paper/50">Gratuit pour commencer, sans carte bancaire.</p>
         </div>
 
-        <div class="relative w-full max-w-sm" v-reveal="120">
-          <div
-            class="pointer-events-none absolute -left-10 top-6 hidden select-none font-mono text-[10px] uppercase tracking-widest text-brass/70 md:block"
-            style="--float-r: -10deg"
-          >
-            <div class="flex h-16 w-16 animate-float items-center justify-center rounded-full border-2 border-dashed border-brass/50 text-center leading-tight">
-              Établi<br />2026
-            </div>
-          </div>
-
-          <Transition name="burst-fade">
-            <div v-if="justRewarded" :key="burstKey" class="pointer-events-none absolute inset-0 z-20 flex items-center justify-center">
-              <span
-                v-for="(b, i) in burstBits"
-                :key="i"
-                class="absolute h-2 w-2 rounded-full bg-brass"
-                :style="{ '--tx': b.tx, '--ty': b.ty, animation: `burst 0.9s ease-out ${b.delay} forwards` }"
-              />
-            </div>
-          </Transition>
-
-          <button
-            type="button"
-            v-tilt
-            class="tilt-glow block w-full cursor-pointer rounded-3xl text-left transition active:scale-[0.97]"
-            aria-label="Tamponner la carte de démonstration"
-            @click="simulateStamp"
-          >
-            <StampCard
-              program-name="Café des Artisans"
-              :stamps-required="stampsRequired"
-              :current-stamps="currentStamps"
-              :rewards-available="currentStamps === 0 ? 1 : 0"
-              reward-description="1 café offert"
-            />
-          </button>
-
-          <p class="mt-4 text-center font-mono text-[10px] uppercase tracking-[0.18em] text-paper/40">
-            {{ currentStamps === stampsRequired ? 'Clique pour encaisser la récompense' : 'Clique sur la carte pour tamponner' }}
-          </p>
-        </div>
-      </div>
-
-      <a href="#comment-ca-marche" class="mx-auto mt-16 flex w-fit animate-bob items-center gap-2 font-mono text-[10px] uppercase tracking-[0.2em] text-paper/40 hover:text-paper/70">
-        Découvrir
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </a>
-    </section>
-
-    <!-- MARQUEE OF REWARDS -->
-    <section class="border-b border-paper/10 py-8">
-      <div class="marquee-row overflow-hidden">
-        <div class="marquee-track">
-          <span
-            v-for="(reward, i) in [...rewardTicker, ...rewardTicker]"
-            :key="i"
-            class="flex shrink-0 items-center gap-2 rounded-full border border-paper/15 bg-paper/[0.04] px-5 py-2 font-mono text-xs uppercase tracking-wide text-paper/60"
-          >
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" class="text-brass"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            {{ reward }}
-          </span>
+        <div class="w-full max-w-[350px] shrink-0" v-reveal="120">
+          <HeroMotion />
         </div>
       </div>
     </section>
@@ -188,8 +71,7 @@ const businessTypes = [
             :class="i % 2 === 1 ? 'md:flex-row-reverse' : ''"
           >
             <div class="flex-1" :class="i % 2 === 1 ? 'md:text-left' : 'md:text-right'">
-              <span class="font-mono text-xs uppercase tracking-[0.2em] text-brass">{{ step.tag }}</span>
-              <h3 class="mt-2 font-display text-2xl italic text-paper">{{ step.title }}</h3>
+              <h3 class="font-display text-2xl italic text-paper">{{ step.title }}</h3>
               <p class="mt-2 font-body text-sm leading-relaxed text-paper/60">{{ step.text }}</p>
             </div>
 
@@ -225,7 +107,7 @@ const businessTypes = [
             <svg v-else-if="biz.icon === 'dumbbell'" width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M4 9v6M2 10.5v3M20 9v6M22 10.5v3M6 12h12" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
             <svg v-else width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M4 5.5A2.5 2.5 0 016.5 3H12v18H6.5A2.5 2.5 0 014 18.5v-13z" stroke="currentColor" stroke-width="1.6"/><path d="M20 5.5A2.5 2.5 0 0017.5 3H12v18h5.5a2.5 2.5 0 002.5-2.5v-13z" stroke="currentColor" stroke-width="1.6"/></svg>
           </span>
-          <span class="font-mono text-[11px] uppercase tracking-wide text-paper/70">{{ biz.label }}</span>
+          <span class="font-body text-sm text-paper/80">{{ biz.label }}</span>
         </div>
       </div>
     </section>
@@ -244,19 +126,7 @@ const businessTypes = [
         >
           Commencer maintenant
         </NuxtLink>
-        <p class="mt-6 font-mono text-[11px] uppercase tracking-[0.14em] text-paper/40">2 minutes chrono &middot; sans engagement</p>
       </div>
     </section>
   </main>
 </template>
-
-<style scoped>
-@keyframes burst {
-  0% { transform: translate(0, 0) scale(0.6); opacity: 1; }
-  100% { transform: translate(var(--tx), var(--ty)) scale(1); opacity: 0; }
-}
-.burst-fade-enter-active { transition: opacity 0.2s ease; }
-.burst-fade-leave-active { transition: opacity 0.6s ease; }
-.burst-fade-enter-from,
-.burst-fade-leave-to { opacity: 0; }
-</style>
